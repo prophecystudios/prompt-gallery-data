@@ -3,14 +3,14 @@
     "id": 1,
     "category": "men",
     "prompt": "A professional headshot of a 30-year-old businessman...",
-    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1772709670/rajnikant_varzo8.jpg"
+    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1772709670/rajnikant_varzo8.jpg",
+    "date": "2026-03-05"
   },
   {
     "id": 2,
     "category": "women",
-    "prompt": "A candid portrait of a young woman in a coffee shop...",
-    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1772711139/435371_oa2rvs.jpg"
+    "prompt": "A candid portrait of a young woman...",
+    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1772711139/435371_oa2rvs.jpg",
+    "date": "2026-03-04"
   }
 ]
-
-
