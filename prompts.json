@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "category": "Men",
+    "prompt": "A professional headshot of a 30-year-old businessman...",
+    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1772709670/rajnikant_varzo8.jpg"
+  },
+  {
+    "id": 2,
+    "category": "women",
+    "prompt": "A candid portrait of a young woman in a coffee shop...",
+    "image_url": "https://res.cloudinary.com/your-cloud/image/upload/v123/prompt-gallery/img2.jpg"
+  }
+]
