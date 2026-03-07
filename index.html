@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prompt Gallery</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Mobile Frame Container -->
+    <div class="mobile-frame">
+        <div class="app-container" id="app">
+            
+            <!-- Splash Screen -->
+            <div class="screen splash-screen active" id="splash-screen">
+                <div class="splash-content">
+                    <div class="splash-icon">
+                        <span class="icon-palette">🎨</span>
+                    </div>
+                    <h1 class="splash-title">Prompt Gallery</h1>
+                    <p class="splash-subtitle">Discover Amazing AI Prompts</p>
+                    <div class="splash-loader">
+                        <div class="loader-bar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Home Screen -->
+            <div class="screen home-screen" id="home-screen">
+                <!-- Header -->
+                <header class="app-header">
+                    <h1 class="app-title">
+                        <span class="icon">🎨</span>
+                        Prompt Gallery
+                    </h1>
+                    <button class="icon-btn" id="search-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </header>
+
+                <!-- Category Tabs -->
+                <div class="category-tabs">
+                    <button class="tab active" data-category="all">All</button>
+                    <button class="tab" data-category="men">Men</button>
+                    <button class="tab" data-category="women">Women</button>
+                    <button class="tab" data-category="kids">Kids</button>
+                    <button class="tab" data-category="family">Family</button>
+                </div>
+
+                <!-- Gallery Grid -->
+                <div class="gallery-container">
+                    <div class="gallery-grid" id="gallery-grid">
+                        <!-- Cards will be dynamically inserted -->
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <nav class="bottom-nav">
+                    <button class="nav-item active" data-screen="home">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item" data-screen="favorites">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <span class="nav-label">Favorites</span>
+                    </button>
+                    <button class="nav-item" data-screen="settings">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span class="nav-label">Settings</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Search Screen -->
+            <div class="screen search-screen" id="search-screen">
+                <header class="search-header">
+                    <button class="back-btn" id="search-back-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="search-input-container">
+                        <svg class="search-icon-svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                        </svg>
+                        <input type="text" class="search-input" id="search-input" placeholder="Search prompts...">
+                    </div>
+                </header>
+
+                <div class="search-content">
+                    <div class="search-tags">
+                        <h3>Popular Tags</h3>
+                        <div class="tags-container">
+                            <span class="tag" data-tag="portrait">Portrait</span>
+                            <span class="tag" data-tag="professional">Professional</span>
+                            <span class="tag" data-tag="casual">Casual</span>
+                            <span class="tag" data-tag="outdoor">Outdoor</span>
+                            <span class="tag" data-tag="studio">Studio</span>
+                            <span class="tag" data-tag="formal">Formal</span>
+                            <span class="tag" data-tag="fun">Fun</span>
+                            <span class="tag" data-tag="creative">Creative</span>
+                        </div>
+                    </div>
+
+                    <div class="search-results" id="search-results">
+                        <!-- Search results will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompt Detail Screen -->
+            <div class="screen detail-screen" id="detail-screen">
+                <header class="detail-header">
+                    <button class="back-btn" id="detail-back-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M19 12H5M12 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <h2>Prompt Details</h2>
+                    <div class="header-spacer"></div>
+                </header>
+
+                <div class="detail-content">
+                    <div class="detail-image-container">
+                        <img src="" alt="AI Generated Image" class="detail-image" id="detail-image">
+                    </div>
+                    
+                    <div class="detail-info">
+                        <div class="prompt-section">
+                            <h3>Prompt</h3>
+                            <p class="prompt-text" id="detail-prompt"></p>
+                        </div>
+
+                        <div class="detail-actions">
+                            <button class="action-btn copy-btn" id="copy-prompt-btn">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                Copy Prompt
+                            </button>
+                            <button class="action-btn favorite-btn" id="detail-favorite-btn">
+                                <svg class="heart-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                </svg>
+                                Add to Favorites
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Favorites Screen -->
+            <div class="screen favorites-screen" id="favorites-screen">
+                <header class="app-header">
+                    <h1 class="app-title">
+                        <span class="icon">❤️</span>
+                        Favorites
+                    </h1>
+                </header>
+
+                <div class="favorites-container">
+                    <div class="gallery-grid" id="favorites-grid">
+                        <!-- Favorite cards will be dynamically inserted -->
+                    </div>
+                    <div class="empty-state" id="empty-favorites">
+                        <span class="empty-icon">💔</span>
+                        <h3>No Favorites Yet</h3>
+                        <p>Tap the heart icon on any prompt to save it here</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <nav class="bottom-nav">
+                    <button class="nav-item" data-screen="home">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item active" data-screen="favorites">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <span class="nav-label">Favorites</span>
+                    </button>
+                    <button class="nav-item" data-screen="settings">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span class="nav-label">Settings</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Settings Screen -->
+            <div class="screen settings-screen" id="settings-screen">
+                <header class="app-header">
+                    <h1 class="app-title">
+                        <span class="icon">⚙️</span>
+                        Settings
+                    </h1>
+                </header>
+
+                <div class="settings-content">
+                    <!-- Section 1: Theme & Support -->
+                    <div class="settings-section">
+                        <!-- Theme Toggle -->
+                        <div class="settings-card">
+                            <div class="settings-item">
+                                <span class="settings-icon">🎨</span>
+                                <span class="settings-label">Theme</span>
+                            </div>
+                            <div class="theme-toggle">
+                                <button class="theme-btn active" data-theme="light">
+                                    <span>☀️</span> Light
+                                </button>
+                                <button class="theme-btn" data-theme="dark">
+                                    <span>🌙</span> Dark
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Support the Dev -->
+                        <div class="settings-card clickable" id="support-dev-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">💝</span>
+                                <span class="settings-label">Support the Dev</span>
+                            </div>
+                        </div>
+
+                        <!-- Rate Us -->
+                        <div class="settings-card clickable" id="rate-us-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">⭐</span>
+                                <span class="settings-label">Rate Us</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Separator -->
+                    <div class="settings-separator"></div>
+
+                    <!-- Section 2: Feedback -->
+                    <div class="settings-section">
+                        <!-- Send Feedback -->
+                        <div class="settings-card clickable" id="feedback-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">📝</span>
+                                <span class="settings-label">Send Feedback</span>
+                            </div>
+                        </div>
+
+                        <!-- Report a Bug -->
+                        <div class="settings-card clickable" id="bug-report-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">🐛</span>
+                                <span class="settings-label">Report a Bug</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section Separator -->
+                    <div class="settings-separator"></div>
+
+                    <!-- Section 3: Info -->
+                    <div class="settings-section">
+                        <!-- Privacy Policy -->
+                        <div class="settings-card clickable" id="privacy-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">🔒</span>
+                                <span class="settings-label">Privacy Policy</span>
+                            </div>
+                        </div>
+
+                        <!-- How to Use -->
+                        <div class="settings-card clickable" id="how-to-use-btn">
+                            <div class="settings-item">
+                                <span class="settings-icon">📖</span>
+                                <span class="settings-label">How to Use</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- App Footer -->
+                    <div class="app-version">
+                        <div class="app-footer-icon">🎨</div>
+                        <p class="app-footer-name">Prompt Gallery</p>
+                        <p class="app-footer-version">Version 1.0.0</p>
+                        <p class="app-footer-tagline">Made with ❤️ for AI Artists</p>
+                    </div>
+                </div>
+
+                <!-- Bottom Navigation -->
+                <nav class="bottom-nav">
+                    <button class="nav-item" data-screen="home">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                        </svg>
+                        <span class="nav-label">Home</span>
+                    </button>
+                    <button class="nav-item" data-screen="favorites">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                        </svg>
+                        <span class="nav-label">Favorites</span>
+                    </button>
+                    <button class="nav-item active" data-screen="settings">
+                        <svg class="nav-icon-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span class="nav-label">Settings</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- About Modal -->
+            <div class="modal" id="about-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>About Prompt Gallery</h2>
+                        <button class="close-modal" id="close-about">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="about-icon">🎨</div>
+                        <h3>Prompt Gallery</h3>
+                        <p class="version">Version 1.0.0</p>
+                        <p class="about-description">
+                            Discover amazing AI prompts curated for you. Browse through stunning images and copy the exact prompts used to create them. Most prompts are generic and work best with Gemini, but can be used with any AI image generator.
+                        </p>
+                        <div class="about-stats">
+                            <span>✨ 100+ Curated Prompts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support/Tip Jar Modal -->
+            <div class="modal" id="tip-jar-modal">
+                <div class="modal-content tip-jar-content">
+                    <div class="modal-header">
+                        <h2>💝 Support the Developer</h2>
+                        <button class="close-modal" id="close-tip-jar">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="tip-jar-description">Love this app? Your support helps me add more amazing prompts weekly!</p>
+                        
+                        <div class="tip-options">
+                            <button class="tip-option" data-amount="15">
+                                <span class="tip-icon">🍵</span>
+                                <span class="tip-label">Buy me a Tea</span>
+                                <span class="tip-price">₹15</span>
+                            </button>
+                            <button class="tip-option" data-amount="25">
+                                <span class="tip-icon">☕</span>
+                                <span class="tip-label">Buy me a Coffee</span>
+                                <span class="tip-price">₹25</span>
+                            </button>
+                            <button class="tip-option" data-amount="50">
+                                <span class="tip-icon">🧃</span>
+                                <span class="tip-label">Buy me a Juice</span>
+                                <span class="tip-price">₹50</span>
+                            </button>
+                            <button class="tip-option" data-amount="150">
+                                <span class="tip-icon">🍺</span>
+                                <span class="tip-label">Buy me a Beer</span>
+                                <span class="tip-price">₹150</span>
+                            </button>
+                        </div>
+                        
+                        <button class="maybe-later-btn" id="maybe-later-btn">Maybe Later</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thank You Modal -->
+            <div class="modal" id="thank-you-modal">
+                <div class="modal-content thank-you-content">
+                    <div class="modal-body">
+                        <div class="thank-you-icon">🎉</div>
+                        <h2>Thank You!</h2>
+                        <p>Your support means the world to me! This helps me add more amazing prompts for you.</p>
+                        <button class="continue-btn" id="continue-btn">Continue Browsing</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How to Use Modal -->
+            <div class="modal" id="info-modal">
+                <div class="modal-content info-modal-content">
+                    <div class="modal-header">
+                        <h2>📖 How to Use</h2>
+                        <button class="close-modal" id="close-info">×</button>
+                    </div>
+                    <div class="modal-body info-body">
+                        <div class="info-section">
+                            <span class="info-emoji">✨</span>
+                            <p>These prompts are specially crafted for <strong>Gemini Nano Banana</strong> (yes, that's actually its name – Google wasn't messing around! 🍌)</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">📋</span>
+                            <p><strong>How to use:</strong> Tap the copy button, hop over to the Gemini app, paste your prompt, and watch the magic happen!</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">❤️</span>
+                            <p>Found a prompt you love? Hit that heart button and save it to your favorites for later creative sessions!</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">🎲</span>
+                            <p><strong>Pro tip:</strong> Results may vary – Nano Banana has its own artistic mood swings. That's what makes it fun!</p>
+                        </div>
+                        
+                        <div class="info-divider"></div>
+                        
+                        <div class="info-section support-section">
+                            <span class="info-emoji">🙏</span>
+                            <p>If this app sparks joy (or at least saves you from prompt writer's block), a quick ⭐ rating on Play Store would make my day! And if you're feeling extra generous, there's a "Support the Dev" button waiting for you in Settings 😉</p>
+                        </div>
+                        
+                        <button class="got-it-btn" id="got-it-btn">Got it! Let's create! 🚀</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Privacy Policy Modal -->
+            <div class="modal" id="privacy-modal">
+                <div class="modal-content info-modal-content">
+                    <div class="modal-header">
+                        <h2>🔒 Privacy Policy</h2>
+                        <button class="close-modal" id="close-privacy">×</button>
+                    </div>
+                    <div class="modal-body info-body">
+                        <div class="info-section">
+                            <span class="info-emoji">🙅</span>
+                            <p><strong>No data collection.</strong> We don't collect, store, or share any personal information. Your privacy is safe with us!</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">💾</span>
+                            <p><strong>Local storage only.</strong> Your favorites are saved locally on your device – they never leave your phone.</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">🎨</span>
+                            <p><strong>AI-generated images.</strong> All images in this app were created using Gemini Nano Banana. No real people, no copyrighted content.</p>
+                        </div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">📊</span>
+                            <p><strong>No analytics or tracking.</strong> We don't use any third-party analytics. No cookies, no trackers, no creepy stuff.</p>
+                        </div>
+                        
+                        <div class="info-divider"></div>
+                        
+                        <div class="info-section">
+                            <span class="info-emoji">📧</span>
+                            <p>Questions? Reach out via the "Send Feedback" option in Settings. We're happy to help!</p>
+                        </div>
+                        
+                        <button class="got-it-btn" id="privacy-ok-btn">Sounds Good! 👍</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Notification -->
+            <div class="toast" id="toast">
+                <span class="toast-icon">✓</span>
+                <span class="toast-message">Copied to clipboard!</span>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
