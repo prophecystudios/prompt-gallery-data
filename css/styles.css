@@ -345,17 +345,26 @@ body {
 
 /* ===== Bottom Navigation (Minimal Icons) ===== */
 .bottom-nav {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 12px 20px 20px;
+    padding: 12px 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
     background: var(--nav-bg);
     border-top: 1px solid var(--border-color);
     z-index: 999;
+}
+
+/* On desktop frame, keep it absolute within the frame */
+@media (min-width: 431px) {
+    .bottom-nav {
+        position: absolute;
+        padding-bottom: 20px;
+    }
 }
 
 .nav-item {
