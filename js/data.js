@@ -1,5 +1,5 @@
 // GitHub Raw URL for prompts data (using jsdelivr for faster cache updates)
-const GITHUB_DATA_URL = 'https://cdn.jsdelivr.net/gh/prophecystudios/prompt-gallery-data@main/prompts.json';
+const GITHUB_DATA_URL = 'https://raw.githubusercontent.com/prophecystudios/prompt-gallery-data/refs/heads/main/prompts.json';
 
 // Prompts array - will be populated from GitHub
 let prompts = [];
@@ -48,4 +48,5 @@ const samplePrompts = [
         image: "https://picsum.photos/seed/sample1/400/400",
         category: "men"
     }
+
 ];
