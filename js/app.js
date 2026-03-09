@@ -1,5 +1,6 @@
 // ===== App State =====
 let currentScreen = 'splash';
+let previousScreen = 'home'; // Track previous screen for back navigation
 let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
 let currentCategory = 'all';
 let currentPrompt = null;
@@ -44,7 +45,12 @@ async function initApp() {
 }
 
 // ===== Screen Navigation =====
-function showScreen(screenName) {
+function showScreen(screenName, addToHistory = true) {
+    // Track previous screen (but not splash)
+    if (currentScreen !== 'splash' && currentScreen !== screenName) {
+        previousScreen = currentScreen;
+    }
+    
     Object.values(screens).forEach(screen => {
         if (screen) screen.classList.remove('active');
     });
@@ -62,6 +68,11 @@ function showScreen(screenName) {
         }
     });
 
+    // Add to browser history for back button support
+    if (addToHistory && screenName !== 'splash') {
+        history.pushState({ screen: screenName }, '', `#${screenName}`);
+    }
+
     // Re-render content when switching screens to sync state
     if (screenName === 'home') {
         renderGallery();
@@ -69,6 +80,46 @@ function showScreen(screenName) {
         renderFavorites();
     }
 }
+
+// ===== Back Button Handler =====
+function handleBackButton() {
+    // Close any open modals first
+    const openModal = document.querySelector('.modal.show');
+    if (openModal) {
+        openModal.classList.remove('show');
+        return;
+    }
+    
+    // Handle back navigation based on current screen
+    switch (currentScreen) {
+        case 'detail':
+        case 'search':
+            // Go back to previous screen (home or favorites)
+            showScreen(previousScreen, false);
+            break;
+        case 'favorites':
+        case 'settings':
+            // Go back to home
+            showScreen('home', false);
+            break;
+        case 'home':
+            // On home screen - let browser handle exit
+            // For Android WebView, this will exit the app
+            history.back();
+            break;
+        default:
+            showScreen('home', false);
+    }
+}
+
+// Listen for browser back button
+window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.screen) {
+        showScreen(e.state.screen, false);
+    } else {
+        handleBackButton();
+    }
+});
 
 // ===== Event Listeners =====
 function setupEventListeners() {
@@ -485,9 +536,10 @@ function setupSettingsListeners() {
     const feedbackBtn = document.getElementById('feedback-btn');
     if (feedbackBtn) {
         feedbackBtn.addEventListener('click', () => {
-            const subject = encodeURIComponent('Feedback for Prompt Gallery App');
-            const body = encodeURIComponent('Hi,\n\nI would like to share my feedback about the Prompt Gallery app:\n\n[Your feedback here]\n\nThank you!');
-            window.location.href = `mailto:balajik100@gmail.com?subject=${subject}&body=${body}`;
+            openEmailOrFallback(
+                'Feedback for Prompt Gallery App',
+                'Hi,\n\nI would like to share my feedback about the Prompt Gallery app:\n\n[Your feedback here]\n\nThank you!'
+            );
         });
     }
 
@@ -495,8 +547,9 @@ function setupSettingsListeners() {
     const bugReportBtn = document.getElementById('bug-report-btn');
     if (bugReportBtn) {
         bugReportBtn.addEventListener('click', () => {
-            const subject = encodeURIComponent('Bug Report - Prompt Gallery App');
-            const body = encodeURIComponent(`Hi,
+            openEmailOrFallback(
+                'Bug Report - Prompt Gallery App',
+                `Hi,
 
 I found a bug in the Prompt Gallery app.
 
@@ -514,8 +567,8 @@ Expected behavior:
 Actual behavior:
 [What actually happened]
 
-Thank you!`);
-            window.location.href = `mailto:balajik100@gmail.com?subject=${subject}&body=${body}`;
+Thank you!`
+            );
         });
     }
 
@@ -624,4 +677,86 @@ function showToast(message) {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 2500);
+}
+
+// ===== Email Helper with Fallback =====
+function openEmailOrFallback(subject, body) {
+    const email = 'balajik100@gmail.com';
+    const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    
+    // Try to open mailto link
+    const mailtoWindow = window.open(mailtoLink, '_self');
+    
+    // Set a timeout to show fallback if mailto doesn't work
+    setTimeout(() => {
+        // Show fallback modal with email info
+        showEmailFallbackModal(email, subject);
+    }, 500);
+}
+
+function showEmailFallbackModal(email, subject) {
+    // Check if modal already exists
+    let modal = document.getElementById('email-fallback-modal');
+    
+    if (!modal) {
+        // Create the modal
+        modal = document.createElement('div');
+        modal.id = 'email-fallback-modal';
+        modal.className = 'modal';
+        modal.innerHTML = `
+            <div class="modal-content info-modal-content">
+                <div class="modal-header">
+                    <h2>📧 Contact Us</h2>
+                    <button class="close-modal" id="close-email-fallback">×</button>
+                </div>
+                <div class="modal-body info-body">
+                    <div class="info-section">
+                        <span class="info-emoji">📬</span>
+                        <p>Send your message to:</p>
+                    </div>
+                    <div style="background: var(--bg-primary); padding: 16px; border-radius: 12px; margin: 16px 0; text-align: center;">
+                        <p style="font-size: 16px; font-weight: 600; color: var(--accent-color); word-break: break-all;" id="fallback-email">${email}</p>
+                    </div>
+                    <div class="info-section">
+                        <span class="info-emoji">📋</span>
+                        <p>Subject: <strong id="fallback-subject">${subject}</strong></p>
+                    </div>
+                    <button class="got-it-btn" id="copy-email-btn" style="margin-top: 16px;">
+                        📋 Copy Email Address
+                    </button>
+                    <button class="maybe-later-btn" id="open-gmail-btn" style="margin-top: 8px; color: var(--accent-color);">
+                        Open Gmail Web
+                    </button>
+                </div>
+            </div>
+        `;
+        document.querySelector('.app-container').appendChild(modal);
+        
+        // Add event listeners
+        document.getElementById('close-email-fallback').addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+        
+        document.getElementById('copy-email-btn').addEventListener('click', () => {
+            copyToClipboard(email);
+            showToast('Email copied!');
+        });
+        
+        document.getElementById('open-gmail-btn').addEventListener('click', () => {
+            window.open(`https://mail.google.com/mail/?view=cm&to=${email}&su=${encodeURIComponent(subject)}`, '_blank');
+            modal.classList.remove('show');
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    } else {
+        // Update existing modal content
+        document.getElementById('fallback-email').textContent = email;
+        document.getElementById('fallback-subject').textContent = subject;
+    }
+    
+    modal.classList.add('show');
 }
