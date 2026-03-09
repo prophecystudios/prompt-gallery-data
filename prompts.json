@@ -1,5 +1,13 @@
 [
   {
+    "id": 3,
+    "category": "women",
+    "prompt": "Using the uploaded image, keep the facial structure and features exactly the same, and create a Portrait of a smiling young woman with long wavy dark brown hair, tilting her head slightly while touching her hair, warm natural sunlight illuminating her face from the side, soft glowing skin, light blue eyes, wearing a fitted brown long-sleeve top and high-waisted black skirt, red cherry-shaped earring visible, cozy café interior background with wooden chairs and warm-toned wall art, golden hour lighting, soft shadows, shallow depth of field, natural candid pose, high-resolution, realistic photography, DSLR quality, 85mm lens, f/2 aperture, warm color grading",
+    "image_url": "https://res.cloudinary.com/ddmmf6dz4/image/upload/v1773069986/HCr7qYBaUAAZP-D_fxrsay.jpg",
+    "date": "2026-03-09"
+  },
+  
+  {
     "id": 1,
     "category": "men",
     "prompt": "A professional headshot of a 30-year-old businessman...",
@@ -14,5 +22,6 @@
     "date": "2026-03-04"
   }
 ]
+
 
 
